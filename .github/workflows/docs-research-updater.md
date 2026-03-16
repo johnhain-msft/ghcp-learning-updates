@@ -25,13 +25,12 @@ tools:
   github:
     toolsets: [repos, issues, pull_requests]
   web-fetch:
-  web-search:
 
 safe-outputs:
   create-pull-request:
     title-prefix: "[docs-update] "
     labels: [documentation, automated, copilot-updates]
-    max: 1
+    draft: true
   create-issue:
     title-prefix: "[research] "
     labels: [research, copilot-updates]
