@@ -46,6 +46,18 @@ module containerApp 'modules/container-app.bicep' = {
   }
 }
 
+module appInsights 'modules/app-insights.bicep' = {
+  name: 'app-insights-deployment'
+  params: {
+    name: '${baseName}-insights'
+    location: location
+    tags: tags
+    logAnalyticsWorkspaceId: logAnalytics.outputs.workspaceId
+    availabilityTestUrl: 'https://${containerApp.outputs.fqdn}'
+  }
+}
+
 output appUrl string = containerApp.outputs.fqdn
 output acrLoginServer string = acr.outputs.loginServer
 output acrName string = acr.outputs.name
+output appInsightsName string = appInsights.outputs.instrumentationKey
