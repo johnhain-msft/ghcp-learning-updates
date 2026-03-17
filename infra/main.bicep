@@ -60,4 +60,4 @@ module appInsights 'modules/app-insights.bicep' = {
 output appUrl string = containerApp.outputs.fqdn
 output acrLoginServer string = acr.outputs.loginServer
 output acrName string = acr.outputs.name
-output appInsightsName string = appInsights.outputs.instrumentationKey
+output appInsightsInstrumentationKey string = appInsights.outputs.instrumentationKey
