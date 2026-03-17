@@ -1,0 +1,11 @@
+{
+  "plugins": [
+    {
+      "name": "azure",
+      "source": "azure-skills/azure",
+      "description": "Microsoft Azure MCP integration — cloud resource management, deployments, and Azure services",
+      "homepage": "https://github.com/microsoft/GitHub-Copilot-for-Azure",
+      "install": "copilot plugin install azure-skills/azure"
+    }
+  ]
+}

@@ -32,9 +32,9 @@ The repo also includes an **agentic workflow** that automatically researches the
 git clone <repo-url> && cd ghcp-learning-updates
 
 # Open the slide deck
-open hackathon.html        # macOS
-start hackathon.html       # Windows
-xdg-open hackathon.html    # Linux
+open site/hackathon.html        # macOS
+start site/hackathon.html       # Windows
+xdg-open site/hackathon.html    # Linux
 ```
 
 ### ⌨️ Keyboard Navigation
@@ -129,16 +129,106 @@ An expert agent for designing, building, and deploying GitHub Copilot agentic wo
 
 ---
 
+## 🐳 Docker
+
+### Build and Run Locally
+
+```bash
+# Build the image
+docker build -t ghcp-hackathon .
+
+# Run the container
+docker run -p 8080:80 ghcp-hackathon
+
+# Open http://localhost:8080
+```
+
+### Development with Docker Compose
+
+```bash
+# Start with live file mounting (no rebuild needed for content changes)
+docker compose up
+
+# Open http://localhost:8080
+# Edit site/hackathon.html or site/agenda.json — refresh browser to see changes
+```
+
+---
+
+## ☁️ Azure Deployment
+
+The site deploys to **Azure Container Apps** (Consumption tier) with **Azure Container Registry** (Basic SKU) for ~$5-7/month.
+
+### Architecture
+
+| Resource | SKU | ~Cost/mo |
+|----------|-----|----------|
+| Azure Container Registry | Basic | $5 |
+| Azure Container Apps | Consumption | $0-2 |
+| Log Analytics Workspace | Free tier | $0 |
+| **Total** | | **~$5-7** |
+
+### Deploy
+
+```bash
+# Prerequisites: Azure CLI, Docker, and an Azure subscription
+
+# One-command deploy
+./deploy.sh
+
+# Or specify custom values
+./deploy.sh <resource-group> <location> <acr-name> <image-tag>
+```
+
+### Manual Deploy Steps
+
+```bash
+# 1. Create resource group
+az group create --name ghcp-hackathon-rg --location eastus2
+
+# 2. Deploy infrastructure
+az deployment group create \
+  --resource-group ghcp-hackathon-rg \
+  --template-file infra/main.bicep \
+  --parameters baseName=ghcp-hackathon
+
+# 3. Build and push image
+az acr login --name ghcphackathonacr
+docker build -t ghcphackathonacr.azurecr.io/hackathon:latest .
+docker push ghcphackathonacr.azurecr.io/hackathon:latest
+
+# 4. Update container app
+az containerapp update \
+  --name ghcp-hackathon-app \
+  --resource-group ghcp-hackathon-rg \
+  --image ghcphackathonacr.azurecr.io/hackathon:latest
+```
+
+---
+
 ## 📁 Repository Structure
 
 ```
 ghcp-learning-updates/
-├── hackathon.html                             # Interactive slide deck
-├── AGENTS.md                                  # Agent instructions for Copilot in this repo
-├── README.md                                  # This file
-└── .github/
-    └── workflows/
-        └── docs-research-updater.md           # Agentic workflow definition
+├── site/                                   # Static site content (served by nginx)
+│   ├── hackathon.html                      # Interactive slide deck
+│   └── agenda.json                         # Hackathon schedule config
+├── infra/                                  # Azure infrastructure (Bicep)
+│   ├── main.bicep                          # Main orchestration
+│   ├── main.bicepparam                     # Default parameters
+│   └── modules/
+│       ├── acr.bicep                       # Container Registry
+│       ├── container-app.bicep             # Container Apps + environment
+│       └── log-analytics.bicep             # Log Analytics workspace
+├── .github/
+│   └── workflows/
+│       └── docs-research-updater.md        # Agentic workflow source
+├── Dockerfile                              # nginx:alpine container
+├── nginx.conf                              # Custom nginx configuration
+├── docker-compose.yml                      # Local dev with live reload
+├── deploy.sh                               # One-command Azure deploy
+├── AGENTS.md                               # Copilot agent instructions
+└── README.md                               # This file
 ```
 
 ---
@@ -152,6 +242,8 @@ ghcp-learning-updates/
 | **[GitHub CLI (`gh`)](https://cli.github.com/)** | Running agentic workflows |
 | **[`gh-aw` extension](https://github.com/github/gh-aw)** | Compiling & running agentic workflows |
 | **GitHub Copilot CLI** | Using the `agentic-workflows-builder` agent in terminal |
+| [Docker](https://www.docker.com/) | Container builds | Docker, Azure deploy |
+| [Azure CLI](https://learn.microsoft.com/cli/azure/) | Azure resource management | Azure deploy |
 
 ---
 
@@ -161,7 +253,7 @@ Contributions to keep this resource current are welcome!
 
 ### Adding or Updating Slides
 
-1. Open `hackathon.html` in a text editor
+1. Open `site/hackathon.html` in a text editor
 2. Each slide is a `<section>` element — add new slides following the existing pattern
 3. Update the section navigation pills if adding a new section
 4. Test in a browser to verify layout and transitions

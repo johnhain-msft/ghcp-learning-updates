@@ -1,0 +1,6 @@
+.git
+.github
+node_modules
+.gitattributes
+README.md
+AGENTS.md
