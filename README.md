@@ -240,11 +240,15 @@ The workflow at `.github/workflows/site-health-monitor.md` runs every 15 minutes
 4. **Reports** — Creates/updates GitHub issues with full incident details
 
 ```bash
-# Trigger a manual health check
+# Trigger a manual health check (uses the default site_url)
 gh aw run site-health-monitor
 
-# Check with a custom URL
-gh workflow run site-health-monitor -f site_url="https://your-custom-url.com"
+# Trigger a health check with a custom URL
+gh aw run site-health-monitor -f site_url=https://your-custom-url.com
+
+# (Optional) Compile to a GitHub Actions workflow, then run via gh workflow:
+# gh aw compile .github/workflows/site-health-monitor.md
+# gh workflow run site-health-monitor --field site_url=https://your-custom-url.com
 ```
 
 ### Ad-Hoc Debugging with Copilot CLI
