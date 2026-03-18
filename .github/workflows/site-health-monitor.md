@@ -47,8 +47,12 @@ network:
     - defaults
     - node
     - "ghcp-hackathon-app.bravegrass-130ae164.eastus2.azurecontainerapps.io"
+    - "eastus2.azurecontainerapps.io"
     - "management.azure.com"
     - "login.microsoftonline.com"
+    - "graph.microsoft.com"
+    - "eastus2.management.azure.com"
+    - "management.core.windows.net"
 
 engine:
   id: copilot
