@@ -30,7 +30,6 @@ mcp-servers:
   azure:
     container: "mcr.microsoft.com/azure-sdk/azure-mcp"
     version: "latest"
-    entrypointArgs: ["server", "start", "--read-only"]
     env:
       AZURE_TENANT_ID: "${{ secrets.AZURE_TENANT_ID }}"
       AZURE_CLIENT_ID: "${{ secrets.AZURE_CLIENT_ID }}"

@@ -23,7 +23,7 @@
 #
 # Monitors the GitHub Copilot Hackathon site health every 15 minutes. Checks HTTP availability, diagnoses issues using Azure MCP, attempts auto-repair via revision restart, and creates GitHub issues for incident tracking.
 #
-# gh-aw-metadata: {"schema_version":"v1","frontmatter_hash":"bca1ddbc3ce7767d67e4b0a7389e85569780b9940c7c910baaa1c45704f31409","compiler_version":"v0.47.0"}
+# gh-aw-metadata: {"schema_version":"v1","frontmatter_hash":"20ead086ae68927bc69f6f8c9ec12df18420a5b4fc1bad0605f357b5dfda7c16","compiler_version":"v0.47.0"}
 
 name: "Site Health Monitor & Auto-Repair Agent"
 "on":
@@ -661,11 +661,6 @@ jobs:
               "azure": {
                 "type": "stdio",
                 "container": "mcr.microsoft.com/azure-sdk/azure-mcp:latest",
-                "entrypointArgs": [
-                  "server",
-                  "start",
-                  "--read-only"
-                ],
                 "tools": [
                   "*"
                 ],
