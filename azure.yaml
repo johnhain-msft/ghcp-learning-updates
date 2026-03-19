@@ -4,6 +4,8 @@ metadata:
 services:
   web:
     host: containerapp
+    image: ghcphackathonacr.azurecr.io/hackathon:latest
+    language: docker
     project: .
     docker:
       path: Dockerfile
