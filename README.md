@@ -11,8 +11,8 @@
 
 | Environment | Link |
 |-------------|------|
-| 🟢 **Production** | [**View Live Presentation →**](https://ghcp-hackathon-prod-app.bravegrass-130ae164.eastus2.azurecontainerapps.io) |
-| 🟡 **Dev (PR preview)** | [**View Dev Preview →**](https://ghcp-hackathon-dev-app.bravegrass-130ae164.eastus2.azurecontainerapps.io) |
+| 🟢 **Production** | [**View Live Presentation →**](https://ghcp-hackathon-prod-app.ambitiousbeach-052ceef7.eastus2.azurecontainerapps.io) |
+| 🟡 **Dev (PR preview)** | [**View Dev Preview →**](https://ghcp-hackathon-dev-app.icybush-ed45e635.eastus2.azurecontainerapps.io) |
 
 </div>
 
@@ -168,8 +168,8 @@ The site deploys to **Azure Container Apps** (Consumption tier) with **Azure Con
 >
 > | Environment | Endpoint |
 > |-------------|----------|
-> | 🟢 Production | [ghcp-hackathon-prod-app](https://ghcp-hackathon-prod-app.bravegrass-130ae164.eastus2.azurecontainerapps.io) |
-> | 🟡 Dev | [ghcp-hackathon-dev-app](https://ghcp-hackathon-dev-app.bravegrass-130ae164.eastus2.azurecontainerapps.io) |
+> | 🟢 Production | [ghcp-hackathon-prod-app](https://ghcp-hackathon-prod-app.ambitiousbeach-052ceef7.eastus2.azurecontainerapps.io) |
+> | 🟡 Dev | [ghcp-hackathon-dev-app](https://ghcp-hackathon-dev-app.icybush-ed45e635.eastus2.azurecontainerapps.io) |
 
 ### Architecture
 
