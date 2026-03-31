@@ -2320,15 +2320,79 @@ body.overview #dot-tooltip { display: none; }
           <li>Async — fire and forget</li>
           <li>Powers the Coding Agent</li>
           <li>Server-side orchestration layer</li>
+          <li>Supports <span class="mono">copilot</span>, <span class="mono">claude</span>, <span class="mono">codex</span>, <span class="mono">opencode</span> engines</li>
         </ul>
       </div>
       <div class="vs-badge">→</div>
     </div>
     <div class="note-bar" style="margin-top:20px;">
-      💡 <strong>/delegate</strong> from the CLI agent hands off tasks to the gh-aw cloud platform — bridging interactive and autonomous execution
+      💡 <strong>/delegate</strong> from the CLI agent hands off tasks to the gh-aw cloud platform — bridging interactive and autonomous execution &nbsp;·&nbsp; Install: <span class="mono">gh extension install github/gh-aw</span> (moved from <span class="mono">githubnext/gh-aw</span> in Feb 2026)
     </div>
   </div>
-  <div class="slide-notes">The gh-aw (GitHub Agentic Workflows) platform is the server-side orchestration layer running in GitHub Actions. When you use /delegate in the CLI, you're handing off to gh-aw. The Coding Agent you assign issues to also runs on gh-aw. The local CLI is for interactive work; gh-aw is for cloud-native, event-triggered autonomous workflows.</div>
+  <div class="slide-notes">The gh-aw (GitHub Agentic Workflows) platform is the server-side orchestration layer running in GitHub Actions. When you use /delegate in the CLI, you're handing off to gh-aw. The Coding Agent you assign issues to also runs on gh-aw. The local CLI is for interactive work; gh-aw is for cloud-native, event-triggered autonomous workflows. Multi-engine support: gh-aw compiles the same workflow for copilot (GitHub Copilot CLI), claude (Claude Code), codex (OpenAI Codex CLI), and opencode engines — the underlying AI differs but the workflow structure, Safe Outputs security model, and MCP tool access are identical. Install: gh extension install github/gh-aw (moved from githubnext/gh-aw in v0.40.1, Feb 2026). Recent additions: domain blocklist (network.blocked frontmatter), MemoryOps for shared memory across runs, skip-if-check-failing pre-activation gate, create-discussion and remove-labels safe outputs, DIFC proxy for auditable operations.</div>
+</section>
+
+<!-- ─────────────────────────── SLIDE 26b: gh-aw Safe Outputs Architecture ─────────────────────────── -->
+<section class="slide" data-section="cli" data-title="gh-aw Safe Outputs">
+  <div class="content">
+    <h2 class="slide-title">gh-aw Safe Outputs Architecture</h2>
+    <p class="slide-subtitle">Four-layer security model for trustworthy autonomous writes</p>
+    <div class="columns col-2" style="align-items:start; gap:24px;">
+      <div style="display:flex; flex-direction:column; gap:12px;">
+        <div class="icon-row">
+          <div class="icon">🔍</div>
+          <div class="row-content">
+            <h4>AI Agent — Read Only</h4>
+            <p>Agent runs with <span class="mono">contents: read</span> only — cannot directly create issues, PRs, or comments</p>
+          </div>
+        </div>
+        <div class="icon-row">
+          <div class="icon">📄</div>
+          <div class="row-content">
+            <h4>NDJSON Output File</h4>
+            <p>Agent calls MCP tools that write structured actions to a NDJSON file — one JSON object per line</p>
+          </div>
+        </div>
+        <div class="icon-row">
+          <div class="icon">⚙️</div>
+          <div class="row-content">
+            <h4>Separate Execution Jobs</h4>
+            <p>After the agent completes, dedicated jobs (with write permissions) process the output file</p>
+          </div>
+        </div>
+        <div class="icon-row">
+          <div class="icon">🛡️</div>
+          <div class="row-content">
+            <h4>Prompt Injection Protection</h4>
+            <p>AI reasoning and write operations are fully separated — malicious instructions cannot trigger unauthorized writes</p>
+          </div>
+        </div>
+      </div>
+      <div>
+        <div class="card card-blue" style="margin-bottom:16px;">
+          <h4 style="margin-bottom:10px;">Safe Output Types</h4>
+          <div class="tool-pills" style="justify-content:flex-start; flex-wrap:wrap; gap:6px;">
+            <span class="pill blue">create-issue</span>
+            <span class="pill blue">add-comment</span>
+            <span class="pill blue">create-pull-request</span>
+            <span class="pill blue">create-discussion</span>
+            <span class="pill blue">remove-labels</span>
+            <span class="pill blue">append-only-comments</span>
+          </div>
+        </div>
+        <div class="card card-accent">
+          <h4 style="margin-bottom:10px;">Why It Matters</h4>
+          <ul class="clean" style="font-size:13px;">
+            <li>Safe for production use</li>
+            <li>Auditable write operations</li>
+            <li>PRs auto-close with <span class="mono">expires</span></li>
+            <li>DIFC proxy for full audit trail</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="slide-notes">Safe Outputs is gh-aw's core security architecture (spec v1.1.0). The AI agent runs with contents: read permission only and cannot directly write to GitHub resources. Instead, it emits structured NDJSON to an output file via MCP tools. After the agent job completes, separate execution jobs (with write permissions) process that file to perform the actual GitHub writes. This separation means a prompt injection attack — even a successful one — cannot cause unauthorized GitHub writes because the AI never has write permissions. Output types include create-issue, add-comment, create-pull-request (with optional expires date), create-discussion, remove-labels, and append-only-comments. The DIFC proxy (v0.64.x) adds Data Integrity and Flow Control for full auditability. Source: github.com/github/gh-aw — scratchpad/safe-outputs-specification.md</div>
 </section>
 
 <!-- ─────────────────────────── SLIDE 27: Section - Customizing CLI ─────────────────────────── -->
