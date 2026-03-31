@@ -829,6 +829,62 @@ body.overview #dot-tooltip { display: none; }
   <div class="slide-notes">Updated March 2026. Neovim officially supports only code completion. Eclipse gained Agent mode, Chat, and MCP in May 2025. Source: docs.github.com/copilot/reference/copilot-feature-matrix</div>
 </section>
 
+<!-- ─────────────────────────── SLIDE: Copilot Plan Tiers ─────────────────────────── -->
+<section class="slide" data-section="overview" data-title="Plan Tiers">
+  <div class="content">
+    <h2 class="slide-title">GitHub Copilot Plans</h2>
+    <p class="slide-subtitle">From free to enterprise — a tier for every developer</p>
+    <div class="columns col-4" style="align-items:start; gap:16px;">
+      <div class="card" style="border-color:var(--border);">
+        <span class="card-icon">🆓</span>
+        <h3>Free</h3>
+        <p style="font-size:12px; color:var(--text-muted); margin-bottom:12px;">Included with any GitHub account</p>
+        <ul class="clean" style="font-size:13px;">
+          <li>2,000 code completions/mo</li>
+          <li>50 chat messages/mo</li>
+          <li>VS Code &amp; JetBrains</li>
+          <li>GPT-4o, Claude 3.5</li>
+        </ul>
+      </div>
+      <div class="card card-accent">
+        <span class="card-icon">⚡</span>
+        <h3>Pro</h3>
+        <p style="font-size:12px; color:var(--text-muted); margin-bottom:12px;">$10/mo — unlimited completions</p>
+        <ul class="clean" style="font-size:13px;">
+          <li>Unlimited completions</li>
+          <li>All models in picker</li>
+          <li>Agent mode &amp; MCP</li>
+          <li>All supported IDEs</li>
+        </ul>
+      </div>
+      <div class="card card-blue">
+        <span class="card-icon">🏢</span>
+        <h3>Business</h3>
+        <p style="font-size:12px; color:var(--text-muted); margin-bottom:12px;">$19/user/mo — team controls</p>
+        <ul class="clean" style="font-size:13px;">
+          <li>Everything in Pro</li>
+          <li>Policy &amp; model controls</li>
+          <li>Audit logs</li>
+          <li>Knowledge Bases</li>
+        </ul>
+      </div>
+      <div class="card card-green">
+        <span class="card-icon">🔒</span>
+        <h3>Enterprise</h3>
+        <p style="font-size:12px; color:var(--text-muted); margin-bottom:12px;">$39/user/mo — org-wide</p>
+        <ul class="clean" style="font-size:13px;">
+          <li>Everything in Business</li>
+          <li>Custom fine-tuning</li>
+          <li>Coding Agent (GA)</li>
+          <li>Advanced security controls</li>
+        </ul>
+      </div>
+    </div>
+    <div class="note-bar" style="margin-top:20px;">💡 <strong>Free tier</strong> is available to every GitHub user — no credit card required. Great for hackathons &amp; exploration! &nbsp;·&nbsp; <em>docs.github.com/en/copilot/about-github-copilot/subscription-plans-for-github-copilot</em></div>
+  </div>
+  <div class="slide-notes">GitHub Copilot Free launched December 2024 — every GitHub account gets 2,000 code completions and 50 chat messages per month at no cost. Pro ($10/mo) removes limits and unlocks the full model picker and all IDEs. Business adds org-wide policy controls, audit logs, and Knowledge Bases. Enterprise adds fine-tuned models and the Coding Agent. Source: docs.github.com/en/copilot/about-github-copilot/subscription-plans-for-github-copilot</div>
+</section>
+
 <!-- ─────────────────────────── SLIDE: Copilot Extensibility Map ─────────────────────────── -->
 <section class="slide" data-section="overview" data-title="Extensibility Map">
   <div class="content">
@@ -1281,7 +1337,7 @@ body.overview #dot-tooltip { display: none; }
         <h3>Ambient Completions</h3>
         <p style="margin-top:12px;">NES works alongside inline completions — together they form Copilot's <strong>ambient editing layer</strong>: suggesting code as you type and predicting what you'll change next.</p>
         <div class="note-bar blue-note" style="margin-top:16px; text-align:left;">
-          Available in <strong>VS Code</strong> (GA) &amp; <strong>Visual Studio</strong> (GA)
+          GA in <strong>VS Code</strong> &amp; <strong>Visual Studio</strong> &nbsp;·&nbsp; 🔵 Preview in <strong>JetBrains</strong>, <strong>Xcode</strong> &amp; <strong>Eclipse</strong>
         </div>
       </div>
     </div>
@@ -1301,8 +1357,8 @@ body.overview #dot-tooltip { display: none; }
         <p style="margin-bottom:12px; font-size:13px; color:var(--text-muted);">Best for everyday tasks</p>
         <div class="tool-pills" style="justify-content:flex-start; margin-bottom:8px;">
           <span class="pill">GPT-4o mini</span>
-          <span class="pill">o3-mini</span>
-          <span class="pill">Gemini Flash</span>
+          <span class="pill">o4-mini</span>
+          <span class="pill">Gemini 2.0 Flash</span>
         </div>
         <ul class="clean" style="margin-top:8px;">
           <li>Code completion</li>
@@ -1315,9 +1371,9 @@ body.overview #dot-tooltip { display: none; }
         <h3>Balanced</h3>
         <p style="margin-bottom:12px; font-size:13px; color:var(--text-muted);">Best for most agent tasks</p>
         <div class="tool-pills" style="justify-content:flex-start; margin-bottom:8px;">
-          <span class="pill blue">GPT-4o</span>
-          <span class="pill blue">Claude 3.5</span>
-          <span class="pill blue">Gemini 1.5 Pro</span>
+          <span class="pill blue">GPT-4.1</span>
+          <span class="pill blue">Claude Sonnet 4.5</span>
+          <span class="pill blue">Gemini 2.5 Pro</span>
         </div>
         <ul class="clean" style="margin-top:8px;">
           <li>Agent mode tasks</li>
@@ -1330,9 +1386,9 @@ body.overview #dot-tooltip { display: none; }
         <h3>Deep Reasoning</h3>
         <p style="margin-bottom:12px; font-size:13px; color:var(--text-muted);">Best for complex problems</p>
         <div class="tool-pills" style="justify-content:flex-start; margin-bottom:8px;">
-          <span class="pill">o1</span>
-          <span class="pill">Claude 3.7</span>
           <span class="pill">o3</span>
+          <span class="pill">Claude 3.7 Sonnet</span>
+          <span class="pill">Claude Opus 4.5</span>
         </div>
         <ul class="clean" style="margin-top:8px;">
           <li>Architecture decisions</li>
@@ -1345,7 +1401,54 @@ body.overview #dot-tooltip { display: none; }
       💡 Select models per conversation via the <strong>model picker</strong> in VS Code, JetBrains, Visual Studio, Xcode &amp; GitHub.com
     </div>
   </div>
-  <div class="slide-notes">The model picker lets you choose the right model per conversation. Use fast models for completions and quick questions, balanced models for most agent tasks, and reasoning models like o1 or Claude 3.7 for architecture and complex debugging. Extended thinking in Claude 3.7 can significantly improve results for hard problems. Source: docs.github.com/en/copilot/using-github-copilot/ai-models/changing-the-ai-model-for-copilot-chat</div>
+  <div class="slide-notes">The model picker lets you choose the right model per conversation. Use fast models for completions and quick questions (GPT-4o mini, o4-mini, Gemini 2.0 Flash), balanced models for most agent tasks (GPT-4.1, Claude Sonnet 4.5, Gemini 2.5 Pro), and reasoning models like o3 or Claude Opus 4.5 for architecture and complex debugging. Extended thinking in Claude 3.7 Sonnet can significantly improve results for hard problems. Source: docs.github.com/en/copilot/using-github-copilot/ai-models/changing-the-ai-model-for-copilot-chat</div>
+</section>
+
+<!-- ─────────────────────────── SLIDE: Vision / Multimodal Input ─────────────────────────── -->
+<section class="slide" data-section="skills" data-title="Vision & Multimodal">
+  <div class="content">
+    <h2 class="slide-title">Vision &amp; Multimodal Input</h2>
+    <p class="slide-subtitle">Attach images, mockups &amp; diagrams to Copilot Chat</p>
+    <div class="columns col-2" style="align-items:start;">
+      <div style="display:flex; flex-direction:column; gap:12px;">
+        <div class="icon-row">
+          <div class="icon">🖼️</div>
+          <div class="row-content">
+            <h4>Attach Images to Chat</h4>
+            <p>Drag and drop screenshots, UI mockups, or architecture diagrams directly into Copilot Chat</p>
+          </div>
+        </div>
+        <div class="icon-row">
+          <div class="icon">🐛</div>
+          <div class="row-content">
+            <h4>Debug from Screenshots</h4>
+            <p>Paste a screenshot of an error or broken UI — Copilot analyzes it and suggests fixes</p>
+          </div>
+        </div>
+        <div class="icon-row">
+          <div class="icon">🗂️</div>
+          <div class="row-content">
+            <h4>Design → Code</h4>
+            <p>Share a UI wireframe or Figma export and ask Copilot to generate the corresponding component code</p>
+          </div>
+        </div>
+      </div>
+      <div class="card card-blue">
+        <span class="card-icon">👁️</span>
+        <h3>IDE Availability</h3>
+        <ul class="clean" style="margin-top:12px;">
+          <li>✅ <strong>Eclipse</strong> — GA</li>
+          <li>🔵 <strong>VS Code</strong> — Preview</li>
+          <li>🔵 <strong>JetBrains</strong> — Preview</li>
+          <li>🔵 <strong>Visual Studio</strong> — Preview</li>
+        </ul>
+        <div class="note-bar blue-note" style="margin-top:16px;">
+          Works with models that support vision (e.g. GPT-4.1, Claude Sonnet 4.5, Gemini 2.5 Pro)
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="slide-notes">Vision/multimodal input lets you attach image files to Copilot Chat conversations. This is increasingly used for debugging visual issues, implementing UI mockups, and explaining complex architecture diagrams. GA in Eclipse; Preview in VS Code, JetBrains, and Visual Studio. Source: docs.github.com/en/copilot/using-github-copilot/asking-github-copilot-questions-in-your-ide</div>
 </section>
 
 <!-- ─────────────────────────── SLIDE 12: Section - MCP ─────────────────────────── -->
@@ -1677,7 +1780,7 @@ body.overview #dot-tooltip { display: none; }
           <li>Start from an issue on GitHub.com</li>
           <li>Collaborative plan + file tree diff</li>
           <li>Review &amp; edit before committing</li>
-          <li>Preview-stage, browser-based</li>
+          <li>GA for Enterprise, browser-based</li>
         </ul>
       </div>
     </div>
@@ -1822,6 +1925,53 @@ body.overview #dot-tooltip { display: none; }
     </div>
   </div>
   <div class="slide-notes">Copilot Code Review is enabled in repository or organization settings. Once enabled, you can request Copilot as a reviewer on any PR. It provides inline comments with suggested code changes that authors can accept with one click. It's designed to complement human review, not replace it.</div>
+</section>
+
+<!-- ─────────────────────────── SLIDE: Copilot PR Summaries ─────────────────────────── -->
+<section class="slide" data-section="coding-agent" data-title="PR Summaries">
+  <div class="content">
+    <h2 class="slide-title">Copilot PR Summaries</h2>
+    <p class="slide-subtitle">Auto-generate pull request descriptions from your diffs</p>
+    <div class="columns col-2" style="align-items:start;">
+      <div style="display:flex; flex-direction:column; gap:12px;">
+        <div class="icon-row">
+          <div class="icon">✍️</div>
+          <div class="row-content">
+            <h4>Auto-Generate Descriptions</h4>
+            <p>Click the Copilot ✨ icon in the PR description field — Copilot analyzes your diffs and commits to draft a summary</p>
+          </div>
+        </div>
+        <div class="icon-row">
+          <div class="icon">📋</div>
+          <div class="row-content">
+            <h4>Highlights Key Changes</h4>
+            <p>Generates a structured overview with a brief summary and bullet-pointed highlights — reviewers get context fast</p>
+          </div>
+        </div>
+        <div class="icon-row">
+          <div class="icon">🔄</div>
+          <div class="row-content">
+            <h4>Works Everywhere</h4>
+            <p>Available on GitHub.com, VS Code, Visual Studio, and the Copilot CLI — wherever you open a PR</p>
+          </div>
+        </div>
+      </div>
+      <div class="card card-blue" style="text-align:center; display:flex; flex-direction:column; gap:16px; align-items:center;">
+        <div style="font-size:48px;">📝</div>
+        <h3 style="color:var(--text-title);">Workflow</h3>
+        <ul class="clean" style="text-align:left; width:100%;">
+          <li>Push your branch &amp; open a PR</li>
+          <li>Click ✨ in the description field</li>
+          <li>Review &amp; edit the draft</li>
+          <li>Submit — reviewers are up to speed</li>
+        </ul>
+        <div class="note-bar blue-note" style="width:100%; text-align:left; margin-top:8px;">
+          Available on paid plans (Pro, Business, Enterprise) &nbsp;·&nbsp; Not included in Copilot Free
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="slide-notes">Copilot PR Summaries let you auto-generate a pull request description by clicking the sparkle icon in the PR description box. Copilot reads your diffs and commit history to produce a structured draft — saving time and improving reviewer context. Available on GitHub.com and in VS Code / Visual Studio. Source: docs.github.com/en/copilot/using-github-copilot/using-github-copilot-for-pull-requests</div>
 </section>
 
 <!-- ─────────────────────────── SLIDE 19: Copilot Autofix ─────────────────────────── -->
