@@ -50,6 +50,46 @@ module logAnalytics 'modules/log-analytics.bicep' = {
   }
 }
 
+module keyVault 'modules/key-vault.bicep' = {
+  name: 'key-vault-deployment'
+  params: {
+    name: '${baseName}-kv'
+    location: location
+    tags: tags
+    githubDispatchToken: githubDispatchToken
+  }
+}
+
+var enableDispatch = !empty(githubDispatchToken) && !empty(githubRepo)
+
+module logicAppDispatch 'modules/logic-app-dispatch.bicep' = if (enableDispatch) {
+  name: 'logic-app-dispatch-deployment'
+  dependsOn: [keyVault]
+  params: {
+    name: '${baseName}-dispatch'
+    location: location
+    tags: tags
+    keyVaultUri: keyVault.outputs.vaultUri
+    githubRepo: githubRepo
+    githubWorkflowFile: githubWorkflowFile
+  }
+}
+
+// Grant Logic App managed identity read access to Key Vault secrets
+resource keyVaultRef 'Microsoft.KeyVault/vaults@2023-07-01' existing = {
+  name: '${baseName}-kv'
+}
+
+resource kvSecretsUserRole 'Microsoft.Authorization/roleAssignments@2022-04-01' = if (enableDispatch) {
+  name: guid(keyVaultRef.id, '${baseName}-dispatch', '4633458b-17de-408a-b874-0445c86b69e6')
+  scope: keyVaultRef
+  properties: {
+    principalId: logicAppDispatch.outputs.principalId
+    principalType: 'ServicePrincipal'
+    roleDefinitionId: subscriptionResourceId('Microsoft.Authorization/roleDefinitions', '4633458b-17de-408a-b874-0445c86b69e6')
+  }
+}
+
 module containerApps 'modules/container-app.bicep' = [for env in environments: {
   name: 'container-app-${env}-deployment'
   params: {
@@ -73,8 +113,7 @@ module appInsights 'modules/app-insights.bicep' = [for (env, i) in environments:
     logAnalyticsWorkspaceId: logAnalytics.outputs.workspaceId
     availabilityTestUrl: 'https://${containerApps[i].outputs.fqdn}'
     githubRepo: githubRepo
-    githubWorkflowFile: githubWorkflowFile
-    githubDispatchToken: githubDispatchToken
+    dispatchWebhookUrl: enableDispatch ? logicAppDispatch.outputs.triggerUrl : ''
   }
 }]
 

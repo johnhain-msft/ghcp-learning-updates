@@ -16,12 +16,9 @@ param availabilityTestUrl string
 @description('GitHub repo for workflow dispatch (owner/repo format)')
 param githubRepo string = ''
 
-@description('GitHub workflow file name to dispatch')
-param githubWorkflowFile string = ''
-
-@description('GitHub PAT for workflow dispatch (from Key Vault or parameter)')
 @secure()
-param githubDispatchToken string = ''
+@description('Webhook URL for alert dispatch (Logic App HTTP trigger)')
+param dispatchWebhookUrl string = ''
 
 resource appInsights 'Microsoft.Insights/components@2020-02-02' = {
   name: name
@@ -68,8 +65,8 @@ resource availabilityTest 'Microsoft.Insights/webtests@2022-06-15' = {
   }
 }
 
-// Alert action group — webhook to trigger GitHub workflow_dispatch
-resource actionGroup 'Microsoft.Insights/actionGroups@2023-01-01' = if (!empty(githubRepo) && !empty(githubDispatchToken)) {
+// Alert action group — webhook to trigger GitHub workflow via Logic App intermediary
+resource actionGroup 'Microsoft.Insights/actionGroups@2023-01-01' = if (!empty(githubRepo) && !empty(dispatchWebhookUrl)) {
   name: '${name}-dispatch-ag'
   location: 'global'
   tags: tags
@@ -78,9 +75,9 @@ resource actionGroup 'Microsoft.Insights/actionGroups@2023-01-01' = if (!empty(g
     enabled: true
     webhookReceivers: [
       {
-        name: 'github-workflow-dispatch'
-        serviceUri: 'https://api.github.com/repos/${githubRepo}/actions/workflows/${githubWorkflowFile}/dispatches'
-        useCommonAlertSchema: false
+        name: 'logic-app-dispatch'
+        serviceUri: dispatchWebhookUrl
+        useCommonAlertSchema: true
         useAadAuth: false
       }
     ]
@@ -88,7 +85,7 @@ resource actionGroup 'Microsoft.Insights/actionGroups@2023-01-01' = if (!empty(g
 }
 
 // Alert rule — fires when availability test fails 2 consecutive times (~2 min)
-resource alertRule 'Microsoft.Insights/metricAlerts@2018-03-01' = if (!empty(githubRepo) && !empty(githubDispatchToken)) {
+resource alertRule 'Microsoft.Insights/metricAlerts@2018-03-01' = if (!empty(githubRepo) && !empty(dispatchWebhookUrl)) {
   name: '${name}-down-alert'
   location: 'global'
   tags: tags
@@ -111,10 +108,6 @@ resource alertRule 'Microsoft.Insights/metricAlerts@2018-03-01' = if (!empty(git
     actions: [
       {
         actionGroupId: actionGroup.id
-        webHookProperties: {
-          Authorization: 'Bearer ${githubDispatchToken}'
-          ref: 'main'
-        }
       }
     ]
   }
