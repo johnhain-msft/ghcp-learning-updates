@@ -21,9 +21,16 @@ permissions:
 
 tools:
   edit:
-  bash: ["echo", "ls", "cat", "head", "tail", "grep", "wc", "sort", "uniq", "date", "git:*", "diff"]
+  # NOTE: ":*" is a special gh-aw wildcard that compiles to `--allow-all-tools`
+  # for the Copilot CLI engine. This blanket-allows every shell command, every
+  # web_fetch URL, and every MCP server tool — bypassing the per-tool permission
+  # gate that would otherwise stall non-interactive runs with
+  # "Permission denied and could not request permission from user".
+  # Tighten this back down to a curated allowlist (e.g. ["echo","ls","cat",...])
+  # once the workflow is stable.
+  bash: [":*"]
   github:
-    toolsets: [repos, issues, pull_requests]
+    toolsets: [issues, pull_requests]
   web-fetch:
   web-search:
 
@@ -61,7 +68,13 @@ network:
     - centralus-2.in.applicationinsights.azure.com
     - westus-0.in.applicationinsights.azure.com
 
-engine: copilot
+engine:
+  id: copilot
+  # --yolo enables ALL permissions non-interactively, including web_fetch URLs.
+  # --allow-all-tools (emitted by gh-aw for bash: [":*"]) does NOT cover the
+  # web_fetch builtin tool, which prompts per-URL and blocks autonomous runs.
+  # See: https://docs.github.com/en/copilot/how-tos/use-copilot-agents/use-copilot-cli
+  args: ["--yolo"]
 
 timeout-minutes: 30
 ---
@@ -95,6 +108,8 @@ The presentation currently covers these major sections:
 | Thank You | 32 | Closing slide |
 
 ## Step 2: Research Latest Updates
+
+> **Tooling guidance**: Always use `web-fetch` and `web-search` for documentation research. Do **not** use the GitHub MCP `get_file_contents` tool to browse external documentation repositories (e.g., `github/docs`, `microsoft/vscode-docs`) — those directory listings frequently exceed MCP payload limits and stall the run. Reserve GitHub MCP tools for issues and pull requests in this repository.
 
 Search for recent GitHub Copilot updates from these sources:
 
